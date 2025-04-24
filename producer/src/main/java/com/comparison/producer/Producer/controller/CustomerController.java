@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutionException;
+
 @RestController
 @RequestMapping("/customer")
 @Slf4j
@@ -26,13 +28,13 @@ public class CustomerController {
         return ResponseEntity.ok().build();
     }
 
-//    @PostMapping("/add-async")
-//    public ResponseEntity<Void> addCustomerAsync(@RequestBody Customer customer) {
-//        log.debug("Enter addCustomerAsync:{}", customer);
-//        customerService.addCustomerAsync(customer);
-//
-//        return ResponseEntity.ok().build();
-//    }
+    @PostMapping("/add-async")
+    public ResponseEntity<Void> addCustomerAsync(@RequestBody Customer customer) throws ExecutionException, InterruptedException {
+        log.debug("Enter addCustomerAsync:{}", customer);
+        kafkaEventPublisher.sendMessageToTopicAddCustomerAsync(customer);
+
+        return ResponseEntity.ok().build();
+    }
 
 //    @PostMapping("/add/loadtest")
 //    public ResponseEntity<Void> addCustomerLoadTest(@RequestBody Customer customer) {
