@@ -25,7 +25,15 @@ public class CustomerController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/add/loadtest-normal")
+    @PostMapping("/add-async")
+    public ResponseEntity<Void> addCustomerAsync(@RequestBody Customer customer) {
+        log.debug("Enter addCustomerAsync:{}", customer);
+        customerService.addCustomerAsync(customer);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/add/loadtest")
     public ResponseEntity<Void> addCustomerLoadTest(@RequestBody Customer customer) {
         log.debug("Enter addCustomerLoadTest:{}", customer);
         String temp = customer.getCustomerName();

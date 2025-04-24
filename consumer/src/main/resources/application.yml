@@ -5,3 +5,8 @@ logging:
     com:
       comparison:
         consumer: debug
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: my-consumer-group-1
