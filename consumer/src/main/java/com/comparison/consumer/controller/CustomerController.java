@@ -24,4 +24,29 @@ public class CustomerController {
 
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/add/loadtest-normal")
+    public ResponseEntity<Void> addCustomerLoadTest(@RequestBody Customer customer) {
+        log.debug("Enter addCustomerLoadTest:{}", customer);
+        String temp = customer.getCustomerName();
+
+        for (int a = 1; a <= 200000; a++) {
+            customer.setCustomerName(temp + a);
+            log.debug("customerName:" + customer.getCustomerName());
+            customerService.addCustomer(customer);
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/add/loadtest-async")
+    public ResponseEntity<Void> addCustomerLoadTestAsync(@RequestBody Customer customer) {
+        log.debug("Enter addCustomerLoadTestAsync:{}", customer);
+        String temp = customer.getCustomerName();
+        for (int a = 1; a <= 200000; a++) {
+            customer.setCustomerName(temp + a);
+            log.debug("customerName:" + customer.getCustomerName());
+            customerService.addCustomerAsync(customer);
+        }
+        return ResponseEntity.ok().build();
+    }
 }
