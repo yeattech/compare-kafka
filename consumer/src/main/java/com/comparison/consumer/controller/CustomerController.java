@@ -2,6 +2,7 @@ package com.comparison.consumer.controller;
 
 import com.comparison.consumer.entity.Customer;
 import com.comparison.consumer.service.CustomerService;
+import com.comparison.dto.CustomerRequestDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,18 +19,19 @@ public class CustomerController {
     CustomerService customerService;
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addCustomer(@RequestBody Customer customer) {
-        log.debug("Enter addCustomer:{}", customer);
+    public ResponseEntity<Void> addCustomer(@RequestBody CustomerRequestDTO customerRequestDTO) {
+        log.debug("Enter addCustomer:{}", customerRequestDTO);
+        Customer customer = new Customer(customerRequestDTO.getCustomerName(), customerRequestDTO.getContactNumber());
         customerService.addCustomer(customer);
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/add-async")
-    public ResponseEntity<Void> addCustomerAsync(@RequestBody Customer customer) {
-        log.debug("Enter addCustomerAsync:{}", customer);
+    public ResponseEntity<Void> addCustomerAsync(@RequestBody CustomerRequestDTO customerRequestDTO) {
+        log.debug("Enter addCustomerAsync:{}", customerRequestDTO);
+        Customer customer = new Customer(customerRequestDTO.getCustomerName(), customerRequestDTO.getContactNumber());
         customerService.addCustomerAsync(customer);
-
         return ResponseEntity.ok().build();
     }
 
