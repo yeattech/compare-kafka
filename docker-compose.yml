@@ -34,7 +34,7 @@ services:
     environment:
       #      MONGO_INITDB_ROOT_USERNAME: root
       #      MONGO_INITDB_ROOT_PASSWORD: root
-      MONGO_INITDB_DATABASE: activity_log_database
+      MONGO_INITDB_DATABASE: mytest_database
     volumes:
       - mongo_data:/data/db
 
@@ -57,7 +57,7 @@ services:
       - kafka
       - mongo
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/activity_log_database
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/mytest_database
     ports:
       - '8100:8100'
 
