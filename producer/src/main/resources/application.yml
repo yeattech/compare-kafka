@@ -1,0 +1,13 @@
+server:
+  port: 8101
+logging:
+  level:
+    com:
+      comparison:
+        producer: debug
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

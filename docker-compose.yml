@@ -38,15 +38,16 @@ services:
     volumes:
       - mongo_data:/data/db
 
-  #  producer:
-  #    build:
-  #      context: /producer
-  #      dockerfile: Dockerfile
-  #    depends_on:
-  #      - kafka
-  #    ports:
-  #      - '8080:8080'
-  #
+  producer:
+    platform: linux/amd64
+    build:
+        context: ./producer
+        dockerfile: Dockerfile
+    depends_on:
+      - kafka
+    ports:
+      - '8101:8101'
+  
   consumer:
     platform: linux/amd64
     build:

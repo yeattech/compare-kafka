@@ -13,9 +13,15 @@ public class KafkaMessageListener {
     @Autowired
     CustomerService customerService;
 
-    @KafkaListener(topics = "MyCustomerSave", autoStartup = "false")
-    public void consumerMyCustomerSave(Customer customer) throws InterruptedException {
-        log.debug("consumerMyCustomerSave:{}", customer);
+    @KafkaListener(topics = "AddCustomer", autoStartup = "true")
+    public void consumerAddCustomer(Customer customer) throws InterruptedException {
+        log.debug("consumerAddCustomer:{}", customer);
         customerService.addCustomer(customer);
+    }
+
+    @KafkaListener(topics = "AddCustomerAsync", autoStartup = "true")
+    public void consumerAddCustomerAsync(Customer customer) throws InterruptedException {
+        log.debug("consumerAddCustomerAsync:{}", customer);
+        customerService.addCustomerAsync(customer);
     }
 }
