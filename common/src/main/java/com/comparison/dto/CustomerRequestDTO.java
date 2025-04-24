@@ -1,11 +1,13 @@
-package com.comparison.producer.Producer.entity;
+package com.comparison.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class Customer {
+public class CustomerRequestDTO {
     String customerName;
     String contactNumber;
 }

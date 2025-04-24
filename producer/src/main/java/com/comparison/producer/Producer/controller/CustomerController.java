@@ -1,6 +1,7 @@
 package com.comparison.producer.Producer.controller;
 
 
+import com.comparison.dto.CustomerRequestDTO;
 import com.comparison.producer.Producer.entity.Customer;
 import com.comparison.producer.Producer.service.KafkaEventPublisher;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ public class CustomerController {
     KafkaEventPublisher kafkaEventPublisher;
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<Void> addCustomer(@RequestBody CustomerRequestDTO customer) {
         log.debug("Enter addCustomer:{}", customer);
         kafkaEventPublisher.sendMessageToTopicAddCustomer(customer);
 
@@ -29,7 +30,7 @@ public class CustomerController {
     }
 
     @PostMapping("/add-async")
-    public ResponseEntity<Void> addCustomerAsync(@RequestBody Customer customer) throws ExecutionException, InterruptedException {
+    public ResponseEntity<Void> addCustomerAsync(@RequestBody CustomerRequestDTO customer) throws ExecutionException, InterruptedException {
         log.debug("Enter addCustomerAsync:{}", customer);
         kafkaEventPublisher.sendMessageToTopicAddCustomerAsync(customer);
 

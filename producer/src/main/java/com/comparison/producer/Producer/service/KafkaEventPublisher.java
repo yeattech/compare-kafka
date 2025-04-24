@@ -1,5 +1,6 @@
 package com.comparison.producer.Producer.service;
 
+import com.comparison.dto.CustomerRequestDTO;
 import com.comparison.producer.Producer.entity.Customer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +18,18 @@ public class KafkaEventPublisher {
     @Autowired
     private KafkaTemplate<String, Object> template;
 
-    public void sendMessageToTopicAddCustomer(Customer customer) {
-        CompletableFuture<SendResult<String, Object>> future = template.send("AddCustomer", customer);
+    public void sendMessageToTopicAddCustomer(CustomerRequestDTO customerRequestDTO) {
+        CompletableFuture<SendResult<String, Object>> future = template.send("AddCustomer", customerRequestDTO);
         future.whenComplete((stringObjectSendResult, throwable) -> {
             if (throwable == null) {
-                log.debug("Sent message=[" + customer + "] with offset=[" + stringObjectSendResult.getRecordMetadata().offset() + "]");
+                log.debug("Sent message=[" + customerRequestDTO + "] with offset=[" + stringObjectSendResult.getRecordMetadata().offset() + "]");
             } else {
-                log.debug("Unable to send message=[" + customer + "] due to : " + throwable.getMessage());
+                log.debug("Unable to send message=[" + customerRequestDTO + "] due to : " + throwable.getMessage());
             }
         });
     }
 
-    public void sendMessageToTopicAddCustomerAsync(Customer customer) throws ExecutionException, InterruptedException {
+    public void sendMessageToTopicAddCustomerAsync(CustomerRequestDTO customer) throws ExecutionException, InterruptedException {
         CompletableFuture<SendResult<String, Object>> future = template.send("AddCustomer", customer);
         future.whenComplete((stringObjectSendResult, throwable) -> {
             if (throwable == null) {

@@ -2,6 +2,7 @@ package com.comparison.consumer.consumer;
 
 import com.comparison.consumer.entity.Customer;
 import com.comparison.consumer.service.CustomerService;
+import com.comparison.dto.CustomerRequestDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -14,14 +15,16 @@ public class KafkaMessageListener {
     CustomerService customerService;
 
     @KafkaListener(topics = "AddCustomer", autoStartup = "true")
-    public void consumerAddCustomer(Customer customer) throws InterruptedException {
-        log.debug("consumerAddCustomer:{}", customer);
+    public void consumerAddCustomer(CustomerRequestDTO customerRequestDTO) throws InterruptedException {
+        log.debug("consumerAddCustomer:{}", customerRequestDTO);
+        Customer customer = new Customer(customerRequestDTO.getCustomerName(), customerRequestDTO.getContactNumber());
         customerService.addCustomer(customer);
     }
 
     @KafkaListener(topics = "AddCustomerAsync", autoStartup = "true")
-    public void consumerAddCustomerAsync(Customer customer) throws InterruptedException {
-        log.debug("consumerAddCustomerAsync:{}", customer);
+    public void consumerAddCustomerAsync(CustomerRequestDTO customerRequestDTO) throws InterruptedException {
+        log.debug("consumerAddCustomerAsync:{}", customerRequestDTO);
+        Customer customer = new Customer(customerRequestDTO.getCustomerName(), customerRequestDTO.getContactNumber());
         customerService.addCustomerAsync(customer);
     }
 }
