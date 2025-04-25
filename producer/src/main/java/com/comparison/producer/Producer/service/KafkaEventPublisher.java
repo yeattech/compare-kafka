@@ -1,12 +1,10 @@
 package com.comparison.producer.Producer.service;
 
 import com.comparison.dto.CustomerRequestDTO;
-import com.comparison.producer.Producer.entity.Customer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
-import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;

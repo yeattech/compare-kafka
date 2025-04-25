@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
+
 @RestController
 @RequestMapping("/customer")
 @Slf4j
@@ -49,14 +51,14 @@ public class CustomerController {
     }
 
     @PostMapping("/add/loadtest-async")
-    public ResponseEntity<Void> addCustomerLoadTestAsync(@RequestBody Customer customer) {
+    public ResponseEntity<String> addCustomerLoadTestAsync(@RequestBody Customer customer) throws InterruptedException {
         log.debug("Enter addCustomerLoadTestAsync:{}", customer);
         String temp = customer.getCustomerName();
-        for (int a = 1; a <= 200000; a++) {
+        for (int a = 1; a <= 1000000; a++) {
             customer.setCustomerName(temp + a);
-            log.debug("customerName:" + customer.getCustomerName());
             customerService.addCustomerAsync(customer);
         }
-        return ResponseEntity.ok().build();
+        log.debug("End addCustomerLoadTestAsync at: {}", Instant.now());
+        return ResponseEntity.ok("OK");
     }
 }

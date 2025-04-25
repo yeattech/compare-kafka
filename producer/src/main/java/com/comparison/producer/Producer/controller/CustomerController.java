@@ -2,7 +2,6 @@ package com.comparison.producer.Producer.controller;
 
 
 import com.comparison.dto.CustomerRequestDTO;
-import com.comparison.producer.Producer.entity.Customer;
 import com.comparison.producer.Producer.service.KafkaEventPublisher;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
