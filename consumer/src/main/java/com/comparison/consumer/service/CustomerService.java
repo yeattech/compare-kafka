@@ -2,6 +2,7 @@ package com.comparison.consumer.service;
 
 import com.comparison.consumer.entity.Customer;
 import com.comparison.consumer.repository.CustomerRepository;
+import com.comparison.consumer.repository.CustomerRepositoryReactive;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -15,6 +16,9 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private CustomerRepositoryReactive customerRepositoryReactive;
+
     public void addCustomer(Customer customer) {
         customerRepository.save(customer);
     }
@@ -24,5 +28,9 @@ public class CustomerService {
         customerRepository.save(customer);
         log.debug("customerName:" + customer.getCustomerName());
         return CompletableFuture.completedFuture(null);
+    }
+
+    public void addCustomerReactive(Customer customer) {
+        customerRepositoryReactive.save(customer);
     }
 }

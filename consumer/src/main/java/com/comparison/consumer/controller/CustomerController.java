@@ -37,6 +37,15 @@ public class CustomerController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/add-reactive")
+    public ResponseEntity<Void> addCustomerReactive(@RequestBody CustomerRequestDTO customerRequestDTO) {
+        log.debug("Enter addCustomerReactive:{}", customerRequestDTO);
+        Customer customer = new Customer(customerRequestDTO.getCustomerName(), customerRequestDTO.getContactNumber());
+        customerService.addCustomerReactive(customer);
+
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/add/loadtest")
     public ResponseEntity<Void> addCustomerLoadTest(@RequestBody Customer customer) {
         log.debug("Enter addCustomerLoadTest:{}", customer);
