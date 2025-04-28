@@ -21,7 +21,7 @@ public class CustomerController {
     KafkaEventPublisher kafkaEventPublisher;
 
     @PostMapping("/add")
-    public ResponseEntity<Void> addCustomer(@RequestBody CustomerRequestDTO customer) {
+    public ResponseEntity<Void> addCustomer(@RequestBody CustomerRequestDTO customer) throws ExecutionException, InterruptedException {
         log.debug("Enter addCustomer:{}", customer);
         kafkaEventPublisher.sendMessageToTopicAddCustomer(customer);
 

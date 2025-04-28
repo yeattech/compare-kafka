@@ -16,7 +16,7 @@ public class KafkaEventPublisher {
     @Autowired
     private KafkaTemplate<String, Object> template;
 
-    public void sendMessageToTopicAddCustomer(CustomerRequestDTO customerRequestDTO) {
+    public void sendMessageToTopicAddCustomer(CustomerRequestDTO customerRequestDTO) throws ExecutionException, InterruptedException {
         CompletableFuture<SendResult<String, Object>> future = template.send("AddCustomer", customerRequestDTO);
         future.whenComplete((stringObjectSendResult, throwable) -> {
             if (throwable == null) {
@@ -25,6 +25,9 @@ public class KafkaEventPublisher {
                 log.debug("Unable to send message=[" + customerRequestDTO + "] due to : " + throwable.getMessage());
             }
         });
+
+        // is a blocking call that waits for the result to be available or throws an exception if the operation fails.
+        future.get();
     }
 
     public void sendMessageToTopicAddCustomerAsync(CustomerRequestDTO customer) throws ExecutionException, InterruptedException {
@@ -36,7 +39,6 @@ public class KafkaEventPublisher {
                 log.debug("Unable to send message=[" + customer + "] due to : " + throwable.getMessage());
             }
         });
-        // is a blocking call that waits for the result to be available or throws an exception if the operation fails.
-        future.get();
+
     }
 }
