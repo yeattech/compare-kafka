@@ -39,6 +39,30 @@ public class KafkaEventPublisher {
                 log.debug("Unable to send message=[" + customer + "] due to : " + throwable.getMessage());
             }
         });
+    }
 
+    public void sendMessageToTopicAddCustomerReactive(CustomerRequestDTO customerRequestDTO) throws ExecutionException, InterruptedException {
+        CompletableFuture<SendResult<String, Object>> future = template.send("AddCustomerReactive", customerRequestDTO);
+        future.whenComplete((stringObjectSendResult, throwable) -> {
+            if (throwable == null) {
+                log.debug("Sent message=[" + customerRequestDTO + "] with offset=[" + stringObjectSendResult.getRecordMetadata().offset() + "]");
+            } else {
+                log.debug("Unable to send message=[" + customerRequestDTO + "] due to : " + throwable.getMessage());
+            }
+        });
+
+        // is a blocking call that waits for the result to be available or throws an exception if the operation fails.
+        future.get();
+    }
+
+    public void sendMessageToTopicAddCustomerAsyncReactive(CustomerRequestDTO customerRequestDTO) throws ExecutionException, InterruptedException {
+        CompletableFuture<SendResult<String, Object>> future = template.send("AddCustomerReactive", customerRequestDTO);
+        future.whenComplete((stringObjectSendResult, throwable) -> {
+            if (throwable == null) {
+                log.debug("Sent message=[" + customerRequestDTO + "] with offset=[" + stringObjectSendResult.getRecordMetadata().offset() + "]");
+            } else {
+                log.debug("Unable to send message=[" + customerRequestDTO + "] due to : " + throwable.getMessage());
+            }
+        });
     }
 }

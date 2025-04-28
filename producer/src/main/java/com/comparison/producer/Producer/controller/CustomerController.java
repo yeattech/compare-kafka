@@ -36,6 +36,20 @@ public class CustomerController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/add-reactive")
+    public ResponseEntity<Void> addCustomerReactive(@RequestBody CustomerRequestDTO customer) throws ExecutionException, InterruptedException {
+        log.debug("Enter addCustomerReactive:{}", customer);
+        kafkaEventPublisher.sendMessageToTopicAddCustomerReactive(customer);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/add-async-reactive")
+    public ResponseEntity<Void> addCustomerAsyncReactive(@RequestBody CustomerRequestDTO customer) throws ExecutionException, InterruptedException {
+        log.debug("Enter addCustomerReactive:{}", customer);
+        kafkaEventPublisher.sendMessageToTopicAddCustomerAsyncReactive(customer);
+        return ResponseEntity.ok().build();
+    }
+
 //    @PostMapping("/add/loadtest")
 //    public ResponseEntity<Void> addCustomerLoadTest(@RequestBody Customer customer) {
 //        log.debug("Enter addCustomerLoadTest:{}", customer);
