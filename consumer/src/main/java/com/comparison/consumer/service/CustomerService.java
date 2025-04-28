@@ -31,6 +31,11 @@ public class CustomerService {
     }
 
     public void addCustomerReactive(Customer customer) {
-        customerRepositoryReactive.save(customer);
+        customerRepositoryReactive.save(customer).subscribe(
+                savedCustomer -> {},
+                error -> {
+                    log.error("Saving customer failed: ", error);
+                }
+        );
     }
 }
