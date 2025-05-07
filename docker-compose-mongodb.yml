@@ -70,17 +70,6 @@ services:
       - mongo
     ports:
       - '8201:8201'
-  mssql:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: mssql
-    environment:
-      SA_PASSWORD: "YourStrong!Passw0rd"
-      ACCEPT_EULA: "Y"
-    ports:
-      - "1433:1433"
-    volumes:
-      - mssql-data:/var/opt/mssql
-    restart: unless-stopped
 
 volumes:
-  mssql-data:
+  mongo_data:
