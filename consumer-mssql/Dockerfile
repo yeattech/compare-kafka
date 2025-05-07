@@ -2,7 +2,7 @@ FROM eclipse-temurin:17-jdk-alpine
 
 WORKDIR /app
 
-COPY target/consumer-1.2-SNAPSHOT.jar /app/consumer.jar
+COPY target/consumer-mssql-1.2-SNAPSHOT.jar /app/consumer.jar
 
 EXPOSE 8201
 

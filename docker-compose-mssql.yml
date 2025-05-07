@@ -1,0 +1,75 @@
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.9.0
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:7.9.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      #      KAFKA_LISTENERS: PLAINTEXT://127.0.0.1:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    command: mongod --noauth
+    environment:
+      #      MONGO_INITDB_ROOT_USERNAME: root
+      #      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: mytest_database
+    volumes:
+      - mongo_data:/data/db
+
+  producer:
+    platform: linux/amd64
+    build:
+        context: ./producer
+        dockerfile: Dockerfile
+    depends_on:
+      - kafka
+    ports:
+      - '8100:8100'
+  
+  consumer:
+    platform: linux/amd64
+    build:
+      context: ./consumer
+      dockerfile: Dockerfile
+    depends_on:
+      - kafka
+      - mongo
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/mytest_database
+    ports:
+      - '8200:8200'
+  consumer-mssql:
+    platform: linux/amd64
+    build:
+      context: ./consumer-mssql
+      dockerfile: Dockerfile
+    depends_on:
+      - kafka
+      - mongo
+    ports:
+      - '8201:8201'
+
+volumes:
+  mongo_data:

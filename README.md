@@ -16,4 +16,4 @@ http://localhost:8201/swagger-ui/index.html
 
 # Configuration
 ## consumer-mssql
-- Update the username and password in application.properties
+- Update the ipaddress, username and password in application.properties
