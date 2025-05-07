@@ -46,7 +46,7 @@ services:
     depends_on:
       - kafka
     ports:
-      - '8101:8101'
+      - '8100:8100'
   
   consumer:
     platform: linux/amd64
@@ -59,7 +59,7 @@ services:
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/mytest_database
     ports:
-      - '8100:8100'
+      - '8200:8200'
 
 volumes:
   mongo_data:

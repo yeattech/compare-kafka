@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY target/consumer-1.2-SNAPSHOT.jar /app/consumer.jar
 
-EXPOSE 8200
+EXPOSE 8201
 
 ENTRYPOINT ["java", "-jar", "/app/consumer.jar"]
