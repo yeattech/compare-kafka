@@ -60,6 +60,16 @@ services:
       SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/mytest_database
     ports:
       - '8200:8200'
+  consumer-mssql:
+    platform: linux/amd64
+    build:
+      context: ./consumer-mssql
+      dockerfile: Dockerfile
+    depends_on:
+      - kafka
+      - mongo
+    ports:
+      - '8201:8201'
 
 volumes:
   mongo_data:

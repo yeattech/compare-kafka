@@ -14,14 +14,14 @@ public class KafkaMessageListener {
     @Autowired
     CustomerService customerService;
 
-    @KafkaListener(topics = "AddCustomer", autoStartup = "false")
+    @KafkaListener(topics = "AddCustomer", autoStartup = "true")
     public void consumerAddCustomer(CustomerRequestDTO customerRequestDTO) throws InterruptedException {
         log.debug("consumerAddCustomer:{}", customerRequestDTO);
         Customer customer =  Customer.builder().customerName(customerRequestDTO.getCustomerName()).contactNumber(customerRequestDTO.getContactNumber()).build();
         customerService.addCustomer(customer);
     }
 
-    @KafkaListener(topics = "AddCustomerAsync", autoStartup = "false")
+    @KafkaListener(topics = "AddCustomerAsync", autoStartup = "true")
     public void consumerAddCustomerAsync(CustomerRequestDTO customerRequestDTO) throws InterruptedException {
         log.debug("consumerAddCustomerAsync:{}", customerRequestDTO);
         Customer customer =  Customer.builder().customerName(customerRequestDTO.getCustomerName()).contactNumber(customerRequestDTO.getContactNumber()).build();
